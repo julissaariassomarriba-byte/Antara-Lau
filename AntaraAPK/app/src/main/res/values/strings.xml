@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Antara</string>
+    <string name="server_url">https://TU-URL-DE-ANTARA.onrender.com</string>
+</resources>

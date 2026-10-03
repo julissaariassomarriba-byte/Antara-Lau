@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Crear cuenta · Antara{% endblock %}
+{% block content %}
+<div class="auth">
+  <div class="brand" style="justify-content:center;margin-bottom:20px;"><span class="dot"></span>Antara</div>
+  <div class="card">
+    <h2>Crear cuenta</h2>
+    <p class="sub">Usa el código de acceso que te proporcionó Antara para crear tu cuenta.</p>
+    <form method="post">
+      <label>Usuario</label>
+      <input name="usuario" placeholder="ej. antara" required>
+      <label>Código de acceso</label>
+      <input name="codigo" type="password" placeholder="Código que te dio el administrador" required>
+      <label>Contraseña</label>
+      <input name="password" type="password" placeholder="••••••" required>
+      <button class="btn" style="width:100%;margin-top:14px;" type="submit">Crear cuenta</button>
+    </form>
+    {% if error %}<div class="msg err">{{ error }}</div>{% endif %}
+    <div class="switch">¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a></div>
+  </div>
+</div>
+{% endblock %}

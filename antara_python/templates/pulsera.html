@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Armar pulsera · Antara{% endblock %}
+{% block content %}
+
+<div class="card">
+  <h2>Registrar un dije / extra en inventario</h2>
+  <form method="post">
+    <input type="hidden" name="accion" value="agregar_extra">
+    <div class="row">
+      <div>
+        <label>Nombre del dije/extra</label>
+        <input name="extra_nombre" placeholder="ej. Dije de luna" required>
+      </div>
+      <div>
+        <label>Cantidad comprada</label>
+        <input name="extra_cantidad" type="number" min="1" required>
+      </div>
+    </div>
+    <button class="btn ghost small" style="margin-top:10px;" type="submit">Agregar al inventario</button>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Armar pulsera</h2>
+  <p class="sub">Elige qué pelotitas y cuántas usa esta pulsera. Puedes agregar varias filas y, si quieres, un dije extra.</p>
+
+  {% if not pelotitas %}
+    <div class="empty">Primero registra alguna compra de pelotitas en la pestaña "Compras de ristras".</div>
+  {% else %}
+  <form method="post">
+    <input type="hidden" name="accion" value="crear_pulsera">
+    <label>Nombre de la pulsera (opcional)</label>
+    <input name="nombre_pulsera" placeholder="ej. Atardecer">
+
+    <div id="componentes">
+      <div class="compRow">
+        <div style="flex:2;">
+          <label>Tipo de pelotita</label>
+          <select name="tipo_id">
+            {% for p in pelotitas %}
+            <option value="{{ p.id }}">{{ p.nombre }} (disp: {{ p.cantidad }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div style="flex:1;">
+          <label>Cantidad a usar</label>
+          <input name="cantidad_uso" type="number" min="1">
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn ghost small" style="margin-top:8px;" onclick="agregarFila()">+ agregar otra pelotita</button>
+
+    <label style="margin-top:14px;">Extra / dije (opcional)</label>
+    <select name="extra_id">
+      <option value="">— ninguno —</option>
+      {% for e in extras %}
+      <option value="{{ e.id }}">{{ e.nombre }} (disp: {{ e.cantidad }})</option>
+      {% endfor %}
+    </select>
+
+    <button class="btn" style="margin-top:16px;" type="submit">Guardar pulsera</button>
+  </form>
+  {% endif %}
+
+  {% if mensaje %}<div class="msg {{ 'ok' if 'guardad' in mensaje or 'agregado' in mensaje else 'err' }}">{{ mensaje }}</div>{% endif %}
+</div>
+
+<div class="card">
+  <h2>Pulseras creadas</h2>
+  {% if pulseras %}
+  <table>
+    <tr><th>Nombre</th><th>Pelotitas</th><th>Extra</th><th>Fecha</th></tr>
+    {% for p in pulseras %}
+    <tr><td>{{ p.nombre }}</td><td>{{ p.comps }}</td><td>{{ p.extra }}</td><td>{{ p.fecha[:10] }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="empty">Aún no has creado pulseras.</div>
+  {% endif %}
+</div>
+
+<script>
+// Solo interfaz: agrega filas para elegir más tipos de pelotitas en la misma pulsera.
+function agregarFila(){
+  const cont = document.getElementById('componentes');
+  const fila = cont.firstElementChild.cloneNode(true);
+  fila.querySelectorAll('input').forEach(i => i.value = '');
+  const del = document.createElement('button');
+  del.type = 'button'; del.className = 'del'; del.textContent = '✕';
+  del.onclick = () => fila.remove();
+  fila.appendChild(del);
+  cont.appendChild(fila);
+}
+</script>
+{% endblock %}

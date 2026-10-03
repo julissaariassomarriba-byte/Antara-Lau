@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión · Antara{% endblock %}
+{% block content %}
+<div class="auth">
+  <div class="brand" style="justify-content:center;margin-bottom:20px;"><span class="dot"></span>Antara</div>
+  <div class="card">
+    <h2>Iniciar sesión</h2>
+    <p class="sub">Entra para ver tu taller de pulseras.</p>
+    <form method="post">
+      <label>Usuario</label>
+      <input name="usuario" placeholder="ej. antara" required>
+      <label>Contraseña</label>
+      <input name="password" type="password" placeholder="••••••" required>
+      <button class="btn" style="width:100%;margin-top:14px;" type="submit">Entrar</button>
+    </form>
+    {% if error %}<div class="msg err">{{ error }}</div>{% endif %}
+    <div class="switch">¿No tienes cuenta? <a href="{{ url_for('signup') }}">Créala aquí</a></div>
+  </div>
+</div>
+{% endblock %}

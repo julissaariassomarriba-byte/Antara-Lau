@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Compras · Antara{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Registrar compra de ristras</h2>
+  <p class="sub">Anota cuántas ristras compraste y cuántas pelotitas trae cada una. Si el color/tipo ya existe, se suma al inventario.</p>
+  <form method="post">
+    <div class="row">
+      <div>
+        <label>Nombre / color de la pelotita</label>
+        <input name="nombre" placeholder="ej. Turquesa" required>
+      </div>
+      <div>
+        <label>Color (opcional, para el punto de color)</label>
+        <input name="color" type="color" value="#2FA89C">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Pelotitas por ristra</label>
+        <input name="por_ristra" type="number" min="1" placeholder="ej. 100" required>
+      </div>
+      <div>
+        <label>Cantidad de ristras compradas</label>
+        <input name="cant_ristras" type="number" min="1" placeholder="ej. 3" required>
+      </div>
+    </div>
+    <button class="btn" style="margin-top:14px;" type="submit">Registrar compra</button>
+  </form>
+  {% if mensaje %}<div class="msg {{ 'ok' if 'registrada' in mensaje else 'err' }}">{{ mensaje }}</div>{% endif %}
+</div>
+
+<div class="card">
+  <h2>Historial de compras</h2>
+  {% if historial %}
+  <table>
+    <tr><th>Tipo</th><th>Por ristra</th><th>Ristras</th><th>Total</th><th>Fecha</th></tr>
+    {% for c in historial %}
+    <tr>
+      <td>{{ c.tipo }}</td><td>{{ c.por }}</td><td>{{ c.cant }}</td><td>{{ c.total }}</td>
+      <td>{{ c.fecha[:10] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="empty">Aún no hay compras registradas.</div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Inventario · Antara{% endblock %}
+{% block content %}
+
+<div class="card">
+  <h2>Pelotitas en inventario</h2>
+  {% if pelotitas %}
+  <table>
+    <tr><th>Tipo</th><th>Cantidad</th></tr>
+    {% for p in pelotitas %}
+    <tr><td><span class="swatch" style="background:{{ p.color }}"></span>{{ p.nombre }}</td><td>{{ p.cantidad }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="empty">Sin registros todavía.</div>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2>Dijes / extras en inventario</h2>
+  {% if extras %}
+  <table>
+    <tr><th>Nombre</th><th>Cantidad</th></tr>
+    {% for e in extras %}
+    <tr><td>{{ e.nombre }}</td><td>{{ e.cantidad }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="empty">Sin registros todavía.</div>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2>Resumen</h2>
+  <p class="sub" style="margin:0;">{{ total_compras }} compras registradas · {{ total_pulseras }} pulseras creadas</p>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Antara · Taller de Pulseras{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="wrap">
+  {% if usuario %}
+  <div class="top">
+    <div class="brand"><span class="dot"></span>Antara</div>
+    <div class="who">{{ usuario }} · <a class="logout" href="{{ url_for('logout') }}">salir</a></div>
+  </div>
+  <div class="tabs">
+    <a class="tab {% if request.path == url_for('compras') %}active{% endif %}" href="{{ url_for('compras') }}">Compras de ristras</a>
+    <a class="tab {% if request.path == url_for('pulsera') %}active{% endif %}" href="{{ url_for('pulsera') }}">Armar pulsera</a>
+    <a class="tab {% if request.path == url_for('inventario') %}active{% endif %}" href="{{ url_for('inventario') }}">Inventario</a>
+  </div>
+  {% endif %}
+
+  {% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+      {% for m in mensajes %}<div class="msg ok">{{ m }}</div>{% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>
